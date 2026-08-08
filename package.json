@@ -68,7 +68,7 @@
     "eslint": "9.37.0",
     "globals": "15.15.0",
     "markdownlint": "0.38.0",
-    "nx": "21.6.4",
+    "nx": "22.7.7",
     "prettier": "3.6.2",
     "typescript": "5.9.3",
     "vite-tsconfig-paths": "5.1.4"
