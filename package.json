@@ -59,7 +59,7 @@
     "@wemake.cx/visual-reasoning": "*"
   },
   "devDependencies": {
-    "@eslint/js": "9.37.0",
+    "@eslint/js": "10.0.1",
     "@nx/eslint": "21.6.4",
     "@tsconfig/bun": "1.0.9",
     "@types/bun": "1.2.21",
