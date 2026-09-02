@@ -65,7 +65,7 @@
     "@types/bun": "1.2.21",
     "@typescript-eslint/eslint-plugin": "8.46.0",
     "@typescript-eslint/parser": "8.46.0",
-    "eslint": "9.37.0",
+    "eslint": "10.9.1",
     "globals": "15.15.0",
     "markdownlint": "0.38.0",
     "nx": "21.6.4",
