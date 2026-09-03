@@ -40,7 +40,7 @@
     "cleanup": "find . -name 'node_modules' -type d -exec rm -rf {} + 2>/dev/null || true && find . -name 'dist' -type d -exec rm -rf {} + 2>/dev/null || true"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "1.26.0",
+    "@modelcontextprotocol/sdk": "1.30.0",
     "@wemake.cx/analogical-reasoning": "*",
     "@wemake.cx/bias-detection": "*",
     "@wemake.cx/constraint-solver": "*",
@@ -61,15 +61,15 @@
   "devDependencies": {
     "@eslint/js": "9.37.0",
     "@nx/eslint": "21.6.4",
-    "@tsconfig/bun": "1.0.9",
-    "@types/bun": "1.2.21",
-    "@typescript-eslint/eslint-plugin": "8.46.0",
-    "@typescript-eslint/parser": "8.46.0",
+    "@tsconfig/bun": "1.0.11",
+    "@types/bun": "1.4.0",
+    "@typescript-eslint/eslint-plugin": "8.68.0",
+    "@typescript-eslint/parser": "8.68.0",
     "eslint": "9.37.0",
     "globals": "15.15.0",
-    "markdownlint": "0.38.0",
+    "markdownlint": "0.41.1",
     "nx": "21.6.4",
-    "prettier": "3.6.2",
+    "prettier": "3.9.6",
     "typescript": "5.9.3",
     "vite-tsconfig-paths": "5.1.4"
   },
