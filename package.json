@@ -1,15 +1,15 @@
 {
   "name": "mcp",
-  "author": "WeMake (https://wemake.cx)",
+  "author": "Florentin One (https://florentin-one.de)",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/WeMake-Labs/mcp.git"
+    "url": "git+https://github.com/florentin-one-cloud/mcp.git"
   },
   "bugs": {
-    "url": "https://github.com/WeMake-Labs/mcp/issues"
+    "url": "https://github.com/florentin-one-cloud/mcp/issues"
   },
-  "description": "WeMake Model Context Protocol (MCP) servers",
-  "homepage": "https://wemake.cx",
+  "description": "Florentin One Model Context Protocol (MCP) servers",
+  "homepage": "https://florentin-one.de",
   "license": "MIT",
   "type": "module",
   "workspaces": [
@@ -17,61 +17,37 @@
   ],
   "private": true,
   "engines": {
-    "bun": ">=1.3.0"
+    "node": ">=22"
   },
-  "packageManager": "bun@1.3.0",
+  "packageManager": "pnpm@11.20.0",
   "scripts": {
-    "start": "bun run --filter='./src/*' start",
-    "build-all": "bun run --filter='./src/*' build",
-    "watch": "bun run --filter='./src/*' watch",
-    "test": "bun test",
-    "prepare": "bun run --filter='./src/*' build",
-    "test:all": "bun run --filter='./src/*' test",
-    "test:coverage": "bun test --coverage",
-    "test:coverage:all": "bun run --filter='./src/*' test --coverage",
-    "publish-all": "bun run --filter='./src/*' publish",
-    "link-all": "bun link --workspaces",
+    "build-all": "pnpm -r build",
+    "test": "pnpm exec vitest run",
+    "test:unit": "pnpm exec vitest run --project unit",
+    "test:integration": "pnpm exec vitest run --project integration",
+    "test:e2e": "pnpm exec vitest run --project e2e",
+    "test:all": "pnpm -r test",
+    "test:coverage": "pnpm exec vitest run --coverage",
+    "test:coverage:all": "pnpm -r test -- --coverage",
+    "test:history": "npx tsx scripts/test-history.ts",
+    "test:cleanup": "npx tsx scripts/test-cleanup.ts",
     "format": "prettier --write . && eslint . --ext .ts,.tsx --fix",
-    "format:yaml": "prettier --write '**/*.{yml,yaml}'",
-    "lint:yaml": "prettier --check '**/*.{yml,yaml}'",
-    "prettier": "prettier --check .",
-    "lint": "eslint . --ext .ts,.tsx",
-    "check": "tsc --noEmit",
-    "cleanup": "find . -name 'node_modules' -type d -exec rm -rf {} + 2>/dev/null || true && find . -name 'dist' -type d -exec rm -rf {} + 2>/dev/null || true"
-  },
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "1.26.0",
-    "@wemake.cx/analogical-reasoning": "*",
-    "@wemake.cx/bias-detection": "*",
-    "@wemake.cx/constraint-solver": "*",
-    "@wemake.cx/decision-framework": "*",
-    "@wemake.cx/ethical-reasoning": "*",
-    "@wemake.cx/focus-group": "*",
-    "@wemake.cx/goal-tracker": "*",
-    "@wemake.cx/memory": "*",
-    "@wemake.cx/metacognitive-monitoring": "*",
-    "@wemake.cx/multimodal-synthesizer": "*",
-    "@wemake.cx/narrative-planner": "*",
-    "@wemake.cx/scientific-method": "*",
-    "@wemake.cx/sequential-thinking": "*",
-    "@wemake.cx/structured-argumentation": "*",
-    "@wemake.cx/transaction-manager": "*",
-    "@wemake.cx/visual-reasoning": "*"
+    "check": "tsc --noEmit"
   },
   "devDependencies": {
     "@eslint/js": "9.37.0",
-    "@nx/eslint": "21.6.4",
-    "@tsconfig/bun": "1.0.9",
-    "@types/bun": "1.2.21",
     "@typescript-eslint/eslint-plugin": "8.46.0",
     "@typescript-eslint/parser": "8.46.0",
     "eslint": "9.37.0",
     "globals": "15.15.0",
     "markdownlint": "0.38.0",
-    "nx": "21.6.4",
+    "miniflare": "5.20260815.0-alpha",
     "prettier": "3.6.2",
+    "tsup": "8.5.1",
     "typescript": "5.9.3",
-    "vite-tsconfig-paths": "5.1.4"
+    "vite-tsconfig-paths": "5.1.4",
+    "vitest": "3.1.3",
+    "wrangler": "4.115.0"
   },
   "prettier": {
     "trailingComma": "none",
@@ -86,14 +62,6 @@
         "options": {
           "proseWrap": "never",
           "objectWrap": "collapse"
-        }
-      },
-      {
-        "files": [
-          ".cursor/rules/*.mdc"
-        ],
-        "options": {
-          "parser": "markdown"
         }
       }
     ]

@@ -3,6 +3,7 @@
 
   "compilerOptions": {
     "lib": ["ESNext"],
+    "types": ["vitest/globals"],
     "target": "ESNext",
     "module": "preserve",
     "moduleDetection": "force",
@@ -31,6 +32,5 @@
     "noImplicitReturns": true,
     "noUncheckedIndexedAccess": false
   },
-
-  "include": ["src/test-helpers/*.ts"]
+  "exclude": ["templates", "dist", "node_modules"]
 }

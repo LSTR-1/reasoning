@@ -1,0 +1,97 @@
+name: Deploy MCP Worker
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Test"]
+    types: [completed]
+    branches: [main]
+
+concurrency:
+  group: deploy-main
+  cancel-in-progress: true
+
+jobs:
+  check-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Query test.yml conclusion for this SHA
+        id: test-check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          RESPONSE=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/florentin-one-cloud/mcp/actions/runs?head_sha=${{ github.sha }}&workflow_id=test.yml&per_page=1")
+
+          CONCLUSION=$(echo "$RESPONSE" | jq -r '.workflow_runs[0].conclusion // "not_found"')
+
+          echo "Test run conclusion: $CONCLUSION"
+
+          case "$CONCLUSION" in
+            "success")
+              echo "Tests passed. Proceeding with deployment."
+              ;;
+            "failure"|"cancelled"|"timed_out"|"skipped")
+              echo "::error::Test workflow conclusion is '$CONCLUSION'. Deployment blocked."
+              exit 1
+              ;;
+            "not_found"|null)
+              echo "::warning::No test run found for SHA ${{ github.sha }}. Allowing deployment (workflow_dispatch or first push)."
+              ;;
+            *)
+              echo "::warning::Unexpected test conclusion '$CONCLUSION'. Allowing deployment with caution."
+              ;;
+          esac
+
+  build:
+    needs: check-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build all
+        run: pnpm run build-all
+      - name: Type check
+        run: pnpm run check
+      - name: Test all
+        run: pnpm run test:all
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build all
+        run: pnpm run build-all
+      - name: Deploy Florentin One MCP
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          packageManager: pnpm
+          workingDirectory: src/florentin-one-mcp

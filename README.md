@@ -1,128 +1,189 @@
-# 💙 WeMake: Enterprise MCP Server Ecosystem
+# Florentin One Unified MCP Server
 
 > **AI-First Enterprise Solutions for the German Market**
 
-WeMake AI delivers production-ready [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) servers designed
-for enterprise environments, with a focus on GDPR compliance, German healthcare standards, and zero-downtime deployment
-on Cloudflare Workers.
+`@florentin-one/mcp` is a single, unified [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) server
+packaging all seven Florentin One reasoning tools into one Cloudflare Worker. Built for enterprise environments with
+GDPR compliance, German data sovereignty, and zero-downtime deployment.
 
-Our MCP servers enable Large Language Models to securely access enterprise data sources, business tools, and AI agents
-while maintaining the highest standards of security, privacy, and regulatory compliance.
+## Architecture
 
-## 🧠 Available MCP Servers
+A single `@florentin-one/mcp` package exposes all seven reasoning tools through one MCP endpoint. The server runs on
+Cloudflare Workers with Durable Objects for state management, deployed exclusively within EU data jurisdiction.
 
-Our ecosystem includes specialized MCP servers organized into key cognitive and operational categories:
-
-### 🎯 Decision & Analysis Frameworks
-
-- **[Decision Framework](src/decision-framework/)** - Structured decision analysis with multiple frameworks (expected
-  utility, multi-criteria, maximin, minimax regret, satisficing)
-- **[Ethical Reasoning](src/ethical-reasoning/)** - Multi-framework ethical analysis (utilitarianism, deontology, virtue
-  ethics, care ethics, social contract)
-- **[Constraint Solver](src/constraint-solver/)** - Mathematical and logical constraint satisfaction validation
-- **[Goal Tracker](src/goal-tracker/)** - Comprehensive goal lifecycle management with progress monitoring
-
-### 🧩 Reasoning & Cognition
-
-- **[Structured Argumentation](src/structured-argumentation/)** - Systematic dialectical reasoning with
-  thesis-antithesis-synthesis progression
-- **[Analogical Reasoning](src/analogical-reasoning/)** - Structured analogy construction and mapping for
-  problem-solving
-- **[Collaborative Reasoning](src/collaborative-reasoning/)** - Multi-persona expert collaboration simulation
-- **[Sequential Thinking](src/sequential-thinking/)** - Step-by-step reasoning with logical dependency tracking
-- **[Metacognitive Monitoring](src/metacognitive-monitoring/)** - Self-monitoring of knowledge boundaries and reasoning
-  quality
-- **[Scientific Method](src/scientific-method/)** - Systematic scientific inquiry and hypothesis testing framework
-
-### 💾 Memory & Data Management
-
-- **[Memory](src/memory/)** - Persistent knowledge graph for cross-session information retention
-- **[Transaction Manager](src/transaction-manager/)** - ACID-compliant multi-step operation management with rollback
-  support
-
-### 🎨 Content & Media Processing
-
-- **[Visual Reasoning](src/visual-reasoning/)** - Spatial reasoning and ASCII visualization for geometric analysis
-- **[Multimodal Synthesizer](src/multimodal-synthesizer/)** - Text and image content integration and synthesis
-- **[Narrative Planner](src/narrative-planner/)** - Three-act story structure planning with character development
-
-### 🔍 Quality & Evaluation
-
-- **[Focus Group](src/focus-group/)** - Multi-persona evaluation framework for MCP server assessment
-- **[Bias Detection](src/bias-detection/)** - Language pattern analysis for bias identification
-
-### 🏗️ Architecture Features
-
-- **Bun-first Development**: Primary dev/runtime with Bun; Node/Workers-compatible builds that exclude Bun-only APIs
-- **Enterprise Security**: GDPR compliance, audit logging, and least-privilege access patterns
-- **TypeScript Native**: Full type safety backed by exhaustive JSDoc documentation
-- **Cloudflare Workers Compatible**: Deploy via Worker-compatible bundles free of Bun-only APIs
-- **Monorepo Architecture**: Unified workspace with automated testing and CI/CD
-
-### 🚀 Code Mode Migration
-
-We are currently migrating our MCP servers to a **Code Mode** architecture. This new pattern exposes tools as a
-programmable TypeScript API, allowing LLMs to write code that interacts directly with our services rather than relying
-solely on JSON-RPC tool calls.
-
-- **Status:** 🚧 In Progress
-- **Migrated Servers:** `sequential-thinking`, `metacognitive-monitoring`
-- **Documentation:** See the detailed [MCP Code Mode Migration Guide](docs/MCP_CODE_MODE_MIGRATION.md) for architecture
-  specs, step-by-step instructions, and performance benefits.
-
-### 🚀 Quick Start
-
-```sh
-# Install dependencies
-bun install
-
-# Run a specific server (example: decision-framework)
-cd src/decision-framework
-bun run start
-
-# Run tests
-bun test
-
-# Build all servers
-bun run build
+```
+┌──────────────────────────────────────────────┐
+│  @florentin-one/mcp (single package)         │
+│  ┌────────────────────────────────────────┐  │
+│  │  MCP Server (Streamable HTTP)          │  │
+│  │  metacognitiveMonitoring               │  │
+│  │  sequentialthinking                    │  │
+│  │  collaborativeReasoning                │  │
+│  │  scientificMethod                      │  │
+│  │  structuredArgumentation               │  │
+│  │  constraintSolver                      │  │
+│  │  narrativePlanner                      │  │
+│  └────────────────────────────────────────┘  │
+│  ┌──────────────┐  ┌──────────────────────┐  │
+│  │  Code Mode   │  │  Agent SDK Handler   │  │
+│  │  (direct TS) │  │  (createMcpHandler)  │  │
+│  └──────────────┘  └──────────────────────┘  │
+└──────────────────────────────────────────────┘
 ```
 
-Each server includes comprehensive documentation, usage examples, and enterprise-grade security features. Visit
-individual server directories for detailed setup and configuration instructions.
+## MCP Specification
 
-## 🤝 Enterprise Support
+Implements **MCP 2026-07-28** using `@modelcontextprotocol/server` v2 with **Streamable HTTP transport** — a fully
+stateless protocol. Each request is self-contained; no session affinity or sticky routing required.
 
-### Professional Services
+## Installation
 
-- **Implementation Consulting**: Expert guidance for enterprise deployment
-- **Custom Development**: Tailored MCP servers for specific requirements
-- **Training & Workshops**: Team training on MCP and AI agent development
-- **24/7 Support**: Enterprise-grade support with SLA guarantees
+```bash
+npm install @florentin-one/mcp
+```
 
-### Contact
+A single package replaces the previous seven individual `@florentin-one/mcp-*` packages.
 
-- **Website**: [wemake.cx](https://wemake.cx)
-- **Security Issues**: [security@wemake.cx](mailto:security@wemake.cx)
+## Available Tools
 
-### Community
+| Tool | Description |
+| --- | --- |
+| `metacognitiveMonitoring` | Systematic self-monitoring: knowledge boundaries, confidence calibration, bias detection |
+| `sequentialthinking` | Dynamic step-by-step reasoning with revision, branching, and dependency tracking |
+| `collaborativeReasoning` | Multi-persona expert collaboration simulation with structured disagreement resolution |
+| `scientificMethod` | Formal hypothesis testing, variable identification, experiment design, evidence evaluation |
+| `structuredArgumentation` | Dialectical reasoning with thesis-antithesis-synthesis progression |
+| `constraintSolver` | Mathematical constraint satisfaction validation for numeric variables |
+| `narrativePlanner` | Three-act story structure planning with character development |
 
-- **LinkedIn**: [WeMake](https://linkedin.com/company/wemake-cx)
+## MCP Client Configuration
 
-## 📜 License
+### Cursor
 
-This project is licensed under MIT. See the [LICENSE](LICENSE) file for details.
+Add to `~/.cursor/mcp.json`:
 
-### Enterprise Licensing
+```json
+{
+  "mcpServers": {
+    "Florentin One MCP": {
+      "command": "npx",
+      "args": ["@florentin-one/mcp@latest"]
+    }
+  }
+}
+```
 
-- **Open Source**: MIT for development and non-commercial use
-- **Enterprise License**: Commercial license available for production deployments
-- **Custom Licensing**: Tailored licensing for specific enterprise requirements
+### Claude Desktop
 
-For enterprise licensing inquiries, contact: <licensing@wemake.cx>
+Add to Claude Desktop configuration:
 
----
+```json
+{
+  "mcpServers": {
+    "florentin-one-mcp": {
+      "command": "npx",
+      "args": ["@florentin-one/mcp@latest"]
+    }
+  }
+}
+```
 
-<div align="center">
-  <strong>Built with 💙 by WeMake for the German Enterprise Market</strong><br>
-  <em>Empowering AI-First Organizations with Secure, Compliant, and Scalable Solutions</em>
-</div>
+### Cloudflare MCP Portals
+
+Connect via HTTP endpoint:
+
+```
+https://mcp.florentin-one.de/mcp
+```
+
+Configure your MCP portal with the Streamable HTTP transport URL above. No additional tool-specific endpoints required —
+all seven tools are served from the single endpoint.
+
+## Code Mode API
+
+Use reasoning tools directly in TypeScript without MCP transport overhead:
+
+```typescript
+import {
+  MetacognitiveCodeMode,
+  SequentialThinking,
+  CollaborativeReasoning,
+  ScientificMethodCodeMode,
+  StructuredArgumentation,
+  ConstraintSolver,
+  NarrativePlanner
+} from "@florentin-one/mcp";
+
+const metacognitive = new MetacognitiveCodeMode();
+const result = await metacognitive.monitor({
+  task: "architecture review",
+  stage: "knowledge-assessment",
+  overallConfidence: 0.8,
+  uncertaintyAreas: ["distributed consensus"],
+  recommendedApproach: "systematic review",
+  monitoringId: "mm-arch-20260820",
+  iteration: 0,
+  nextAssessmentNeeded: true
+});
+```
+
+## Cloudflare Deployment
+
+A single Cloudflare Worker with Durable Objects for state management:
+
+- **Worker**: `florentin-one-mcp` — single entry point for all seven tools
+- **Durable Object**: `FlorentinOneMCP` — SQLite-backed state persistence
+- **Jurisdiction**: EU-only deployment, compliant with German data sovereignty requirements under GDPR Art. 28
+- **Transport**: Streamable HTTP, stateless, no session affinity
+
+Deploy from the package directory:
+
+```bash
+cd src/florentin-one-mcp
+pnpm exec wrangler deploy
+```
+
+## Development
+
+### Prerequisites
+
+- **pnpm** >= 11.20.0
+- **Node.js** >= 22
+- **Git** for version control
+
+### Setup
+
+```bash
+git clone https://github.com/florentin-one-cloud/mcp.git
+cd mcp
+pnpm install
+pnpm run build-all
+pnpm run test:all
+```
+
+### Project Structure
+
+```tree
+mcp/
+├── src/
+│   └── florentin-one-mcp/          # Unified MCP server package
+│       ├── src/
+│       │   ├── agent/              # MCP server factory (createServer)
+│       │   ├── tools/              # Tool implementations
+│       │   ├── codemode/           # Direct TypeScript API (7 tools)
+│       │   ├── core/               # Pure business logic (7 tools)
+│       │   ├── lib/                # Shared utilities (PostHog analytics)
+│       │   ├── index.ts            # Stdio entry point + Code Mode exports
+│       │   └── worker.ts           # Cloudflare Worker entry point
+│       ├── package.json
+│       ├── tsup.config.ts
+│       ├── vitest.config.ts
+│       └── wrangler.jsonc
+├── .github/workflows/              # CI/CD pipelines
+├── package.json                    # pnpm workspace root
+└── pnpm-workspace.yaml
+```
+
+## License
+
+MIT. See [LICENSE](LICENSE) for details.

@@ -1,0 +1,7 @@
+packages:
+  - "src/*"
+
+allowBuilds:
+  core-js-pure: false
+  esbuild: true
+  workerd: true

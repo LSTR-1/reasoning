@@ -1,6 +1,0 @@
-{"name":"Duplicate Entity","entityType":"concept","observations":["First"],"type":"entity"}
-{"name":"Entity A","entityType":"concept","observations":["Entity A observation"],"type":"entity"}
-{"name":"Entity B","entityType":"concept","observations":["Entity B observation"],"type":"entity"}
-{"name":"A","entityType":"concept","observations":[],"type":"entity"}
-{"name":"B","entityType":"concept","observations":[],"type":"entity"}
-{"from":"Entity A","to":"Entity B","relationType":"relates-to","type":"relation"}

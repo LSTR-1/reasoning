@@ -1,5 +1,6 @@
-# dependencies (bun install)
+# dependencies
 node_modules
+.pnpm-store/
 
 # output
 out
@@ -19,10 +20,6 @@ html.meta.json.gz
 playwright-report/  
 test-results.xml
 junit.xml
-
-# Bun runtime artefacts
-bun.lockb
-.bun/
 
 # code coverage
 coverage
@@ -51,7 +48,9 @@ report.*.json
 # Finder (MacOS) folder config
 .DS_Store
 
-.nx/cache
-.nx/workspace-data
-.cursor/rules/nx-rules.mdc
-.github/instructions/nx.instructions.md
+# Wrangler
+.wrangler
+
+# Agents
+.trae
+AGENTS.md

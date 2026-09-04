@@ -1,0 +1,68 @@
+{
+  "name": "@florentin-one/mcp",
+  "version": "1.0.2",
+  "description": "Florentin One Unified MCP Server — all reasoning tools in one Cloudflare Worker",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "exports": "./dist/index.js",
+  "types": "./dist/types/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/florentin-one-cloud/mcp.git",
+    "directory": "src/florentin-one-mcp"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "latest"
+  },
+  "bugs": {
+    "url": "https://github.com/florentin-one-cloud/mcp/issues"
+  },
+  "homepage": "https://github.com/florentin-one-cloud/mcp/tree/main/src/florentin-one-mcp",
+  "author": "Phichayut 'Florentin' Sakwiset (https://github.com/heyFlorentin)",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "reasoning",
+    "metacognitive",
+    "sequential-thinking",
+    "collaborative-reasoning",
+    "scientific-method",
+    "structured-argumentation",
+    "constraint-solver",
+    "narrative-planner",
+    "cloudflare-workers",
+    "agents-sdk"
+  ],
+  "bin": {
+    "florentin-one-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup && tsc",
+    "start": "node ./dist/index.js",
+    "test": "vitest run",
+    "test:unit": "vitest run --project unit",
+    "test:integration": "vitest run --project integration",
+    "test:e2e": "vitest run --project e2e",
+    "deploy": "pnpm exec wrangler deploy",
+    "generate-types": "wrangler types"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "^2.0.0",
+    "agents": "^0.20.1",
+    "zod": "^4.4.0",
+    "chalk": "5.3.0",
+    "expr-eval": "2.0.2",
+    "posthog-node": "5.46.1",
+    "@posthog/mcp": "0.10.1"
+  },
+  "devDependencies": {
+    "@types/node": "22",
+    "typescript": "5.9.3",
+    "wrangler": "4.115.0"
+  }
+}

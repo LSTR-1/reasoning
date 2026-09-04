@@ -1,0 +1,18 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "main": "dist/worker.js",
+  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_date": "2026-07-29",
+  "workers_dev": true,
+  "preview_urls": true,
+  "observability": {
+    "logs": {
+      "enabled": true,
+      "invocation_logs": false
+    }
+  },
+  "cache": {
+    "enabled": true
+  },
+  "name": "florentin-one-mcp"
+}
